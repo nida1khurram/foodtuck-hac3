@@ -6,6 +6,7 @@ export interface BlogPost {
     author: string;
     excerpt: string;
     image: string;
+    slug: string;
   }
   export interface RecentPost {
     id: number;
@@ -36,6 +37,7 @@ export interface BlogPost {
       date: "Feb 14, 2022",
       comments: 37,
       author: "Admin",
+      slug: 'Blogdetails',
     },
     {
       id: 2,
@@ -46,6 +48,7 @@ export interface BlogPost {
       date: "Feb 14, 2022",
       comments: 47,
       author: "Admin",
+      slug: 'Blogdetails#2',
     },
     {
       id: 3,
@@ -57,6 +60,7 @@ export interface BlogPost {
       date: "Feb 14, 2022",
       comments: 47,
       author: "Admin",
+      slug: 'Blogdetails',
     },
     {
       id: 4,
@@ -69,6 +73,7 @@ export interface BlogPost {
       date: "Feb 14, 2022",
       comments: 47,
       author: "Admin",
+      slug: 'Blogdetails',
     },
     // Add more blog posts...
   ];

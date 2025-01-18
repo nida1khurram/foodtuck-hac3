@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 import { Star } from 'lucide-react'
 import { blogPosts, recentPosts, menuCategories, popularTags, galleryImages, authorProfile } from "./blogData"
 import { Search, ChevronDown } from 'lucide-react'
@@ -8,7 +9,7 @@ export default function Blog() {
       {/* Main Content */}
       <div className="lg:w-2/3">
         {blogPosts.map((post) => (
-          <article key={post.id} className="mb-8 pb-8 border-b">
+          <article key={post.id} className="mb-8 pb-8 border-b" id="blog3" >
             <div className="relative aspect-[16/9] mb-4 rounded-lg overflow-hidden">
               <Image
                 src={post.image}
@@ -34,9 +35,11 @@ export default function Blog() {
             </div>
             <h2 className="text-2xl font-bold mb-3">{post.title}</h2>
             <p className="text-gray-600 mb-4">{post.excerpt}</p>
+            <Link href={`/blog/${post.slug}`}>
             <button className="text-yellow  font-medium border-2 border-yellow rounded-sm h-10 w-[150px]">
               Read More →
             </button>
+            </Link>
           </article>
         ))}
       </div>

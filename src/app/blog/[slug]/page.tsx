@@ -10,7 +10,7 @@ export default function BlogDetail() {
      <Container>
        {/* import header */}
             <TopHeader />
-            <PHeader title='Blog List' />
+            <PHeader title='Blog Details' />
              {/* import header end*/}
 
     <div className="max-w-[1920px] mx-auto px-4 py-8 flex flex-col lg:flex-row gap-8 ml-40 mr-40">

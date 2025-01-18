@@ -6,6 +6,7 @@ export interface BlogPost2 {
     author: string;
     excerpt: string;
     image: string;
+    
   }
   export interface RecentPost2 {
     id: number;
@@ -32,7 +33,7 @@ export interface BlogPost2 {
       title: "10 Reasons To Do A Digital Detox Challenge",
       excerpt:
         "Ut vero erat at accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat",
-      image: "/bloglist/p1.png",
+      image: "/blogdetails/p1.png",
       date: "Feb 14, 2022",
       comments: 37,
       author: "Admin",
@@ -42,7 +43,7 @@ export interface BlogPost2 {
       title: "Traditional Soft Pretzels with Sweet Beer Cheese",
       excerpt:
         "Ut vero erat at accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et",
-      image: "/bloglist/p2.png",
+      image: "/blogdetails/p2.png",
       date: "Feb 14, 2022",
       comments: 47,
       author: "Admin",

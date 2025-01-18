@@ -26,16 +26,16 @@ export default function Hero() {
           <div className='lg:w-[45%] w-full mx-auto pt-40'>
             <div className="relative z-20  flex flex-col justify-center items-start px-6 lg:px-10 mt-4 lg:mt-0">
               <div className='lg:w-[27px] lg:h-[492px] absolute mt-[-100px] lg:mt-96 lg:ml-[-20px] left-4 lg:left-auto'>
-                <FaFacebookF className='text-[#ff9F0D] mb-5' />
-                <FaTwitter className='text-[#ff9F0D] mb-5' />
-                <SlSocialPintarest className='text-[#ff9F0D] mb-5' />
+                <Link href={'/'}><FaFacebookF className='text-[#ff9F0D] mb-5' /></Link>
+                <Link href={'/'}><FaTwitter className='text-[#ff9F0D] mb-5' /></Link>
+                <Link href={'/'}><SlSocialPintarest className='text-[#ff9F0D] mb-5' /></Link>
               </div>
               <div className='ml-4 lg:ml-5'>
                 <h2 className="text-[#ff9F0D] font-greatvibes text-2xl font-normal mb-2 leading-10">It's Quick & Amazing!</h2>
                 <h1 className="text-3xl lg:text-6xl font-bold text-[#ff9F0D] lg:leading-[68px] mb-2 lg:mb-8">Th<span className='text-white'>e Art of speed food Quality</span></h1>
                 <p className="text-base text-white font-normal leading-6 mb-8 max-w-md">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Varius sed pharetra dictum neque massa congue</p>
               </div>
-              <Link href="/" className="bg-[#ff9F0D] text-white font-inter text-base px-10 lg:px-14 py-2 lg:py-4 rounded-full hover:bg-orange-600 transition duration-300 mt-6 lg:mt-0">
+              <Link href="/menu" className="bg-[#ff9F0D] text-white font-inter text-base px-10 lg:px-14 py-2 lg:py-4 rounded-full hover:bg-orange-600 transition duration-300 mt-6 lg:mt-0">
                 See Menu
               </Link>
             </div>

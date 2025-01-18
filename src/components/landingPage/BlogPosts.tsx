@@ -10,16 +10,20 @@ const blogPosts = [
     title: 'Pellentesque Non Efficitur Mi Aliquam Convallis Mi Quis',
     date: '10 February 2022',
     image: '/blogPost/p1.png',
+
   },
   {
     title: 'Morbi Sodales Tellus Elit, In Blandit Risus Suscipit A',
     date: '10 February 2022',
     image: '/blogPost/p2.png',
+    url: "/blog#2",
   },
   {
     title: 'Curabitur rutrum velit ac congue malesuada',
     date: '10 February 2022',
     image: '/blogPost/p3.png',
+
+    url: "/blog#blog3",
   },
 ]
 
@@ -43,9 +47,14 @@ export default function BlogPosts() {
               <p className="text-gray-400 mb-2">{post.date}</p>
               <h3 className="font-bold mb-4 text-white">{post.title}</h3>
               <div className='flex justify-between'>
-              <Link href="/blog" className="text-white hover:underline">
+              <Link href={post.url || "#"} target="_blank" className="text-white hover:underline">
                 Learn More
               </Link>
+              {/* <Link href={project.url || "#"} target="_blank">
+                    {project.url ? "View Project" : "No URL Provided"}
+                  </Link> */}
+
+
               <div className='text-white flex gap-2'>
               <AiOutlineLike /><MdOutlineTextsms className='text-orange-500'/><IoShareSocialOutline />
               </div>

@@ -12,6 +12,7 @@ import BlogPosts from "@/components/landingPage/BlogPosts";
 
 
 
+
 export default function Home() {
   return (
    <>
@@ -24,7 +25,6 @@ export default function Home() {
        <Statistics />
     <Menu />
     <Chefs />
-    
     <div className="bg-[#0D0D0D]">
     <Testimonials />
     </div>

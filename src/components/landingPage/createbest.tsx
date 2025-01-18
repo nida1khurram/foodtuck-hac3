@@ -23,7 +23,7 @@ export default function CreateBest() {
       <FaCheck className="font-inter text-lg text-white leading-[26px] mb-6"/> <span className="ml-[10px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
       </div>
       </div>
-      <Link href="/" className="bg-[#ff9F0D] text-white font-inter text-base px-14 py-4 rounded-full hover:bg-orange-600 transition duration-300">
+      <Link href="/about" className="bg-[#ff9F0D] text-white font-inter text-base px-14 py-4 rounded-full hover:bg-orange-600 transition duration-300">
         Read More
         </Link>
         </div>
