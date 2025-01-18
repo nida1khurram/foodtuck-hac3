@@ -46,5 +46,10 @@ export default {
         title: 'Currently Active',
         description: 'Availability status of the chef',
       },
+      {
+        name: 'slug',
+        type: 'string',
+        title: 'Slug',
+      }
     ],
   };

@@ -11,7 +11,7 @@ export default function OurMenu2() {
  
       <div className="md:max-w-[1320px] md:max-h-[628px] mx-auto ">
       
-        <section className="md:mb-16 px-10">
+        <section className="md:mb-16 px-10" id='desert'>
           <div className="flex flex-col md:flex-row gap-2">
             {/* img */}
             <div className="md:w-1/2">
@@ -46,7 +46,7 @@ export default function OurMenu2() {
           </div>
         </section>
 
-        <section className='px-10 md:mb-16'>
+        <section className='px-10 md:mb-16' id='drink'>
           <div className="flex flex-col-reverse md:flex-row gap-8">
             <div className="md:w-1/2 my-6">
             {/* text */}

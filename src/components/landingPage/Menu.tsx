@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Container } from '../container';
-
+import Link from 'next/link';
 const menuItems = [
   { name: 'Lettuce Leaf', description:'Lacus nisi, et ac dapibus velit in consequat.', price: 12.5, image: "/ourmenu/001.png", },
   { name: 'Fresh Breakfast',description:'Lacus nisi, et ac dapibus velit in consequat.', price: 14.5, image: "/ourmenu/002.png" },
@@ -23,13 +23,13 @@ export default function Menu() {
           <span className="text-orange-500">Fr</span>om Our Menu
         </h2>
         <div className="flex flex-col md:flex-row justify-center md:space-x-4 space-y-4 md:space-y-0 mb-8">
-          <button className="text-white hover:text-orange-500 font-bold text-[20px]">Breakfast</button>
-          <button className="text-white hover:text-orange-500 font-bold text-[20px]">Lunch</button>
-          <button className="text-white hover:text-orange-500 font-bold text-[20px]">Dinner</button>
-          <button className="text-white hover:text-orange-500 font-bold text-[20px]">Dessert</button>
-          <button className="text-white hover:text-orange-500 font-bold text-[20px]">Drink</button>
-          <button className="text-white hover:text-orange-500 font-bold text-[20px]">Snack</button>
-          <button className="text-white hover:text-orange-500 font-bold text-[20px]">Soups</button>
+          <Link href={'/menu#starter'}><button className="text-white hover:text-orange-500 font-bold text-[20px]">Breakfast</button></Link>
+          <Link href={'/menu#main'}><button className="text-white hover:text-orange-500 font-bold text-[20px]">Lunch</button></Link>
+          <Link href={'/menu#'}><button className="text-white hover:text-orange-500 font-bold text-[20px]">Dinner</button></Link>
+          <Link href={'/menu#desert'}><button className="text-white hover:text-orange-500 font-bold text-[20px]">Dessert</button></Link>
+          <Link href={'/menu#drink'}><button className="text-white hover:text-orange-500 font-bold text-[20px]">Drink</button></Link>
+          <Link href={'/menu#starer'}><button className="text-white hover:text-orange-500 font-bold text-[20px]">Snack</button></Link>
+          <Link href={'/menu#drink'}><button className="text-white hover:text-orange-500 font-bold text-[20px]">Soups</button></Link>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
           <div className="relative h-[362px]">
