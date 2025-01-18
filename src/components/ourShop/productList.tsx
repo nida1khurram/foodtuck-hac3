@@ -158,15 +158,16 @@ import React from "react";
 
 // Fetch products using the Sanity client
 const fetchProducts = async (): Promise<IProduct[]> => {
-  const query = `*[_type == "product"]{
-    name,
-    "slug": slug.current,
-    image,
+  const query = `*[_type == "food"]{
+     name,
     category,
     price,
-    priceWithoutDiscount,
-    rating,
-    sell
+    originalPrice,
+    tags,
+    image,
+    description,
+    available,
+    "slug": slug.current,
   }`;
   return await client.fetch(query);
 };
@@ -174,13 +175,14 @@ const fetchProducts = async (): Promise<IProduct[]> => {
 // Define Product type
 interface IProduct {
   name: string;
-  slug: string;
-  image: Iimage;
   category: string;
   price: number;
-  priceWithoutDiscount?: number;
-  rating?: number;
-  sell?: string;
+  originalPrice?: number;
+  tags:string;
+  image: Iimage;
+  description:string;
+  available:boolean;
+  slug: string;
 }
 
 const ProductList: React.FC = () => {
@@ -208,7 +210,7 @@ const ProductList: React.FC = () => {
 
   return (
     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      {products.map(({ slug, image, name, price, priceWithoutDiscount, sell }) => (
+      {products.map(({  slug, image, name, price, originalPrice,category,tags,description,available }) => (
         <div
           key={slug}
           className="max-w-[312px] rounded-lg shadow-md overflow-hidden"
@@ -223,11 +225,11 @@ const ProductList: React.FC = () => {
                 className="object-cover w-full h-64"
               />
               <div className="absolute top-2 right-2 flex gap-2"></div>
-              {sell && (
+              {/* {sell && (
                 <span className="absolute top-2 left-2 bg-orange-600 text-white rounded-md px-2 text-sm">
                   {sell}
                 </span>
-              )}
+              )} */}
             </div>
           </Link>
           <div className="p-4">
@@ -240,9 +242,9 @@ const ProductList: React.FC = () => {
               <span className="text-orange-500 font-bold">
                 ${price.toFixed(2)}
               </span>
-              {priceWithoutDiscount && (
+              {originalPrice && (
                 <span className="text-gray-600 line-through">
-                  ${priceWithoutDiscount.toFixed(2)}
+                  ${originalPrice.toFixed(2)}
                 </span>
               )}
             </div>
