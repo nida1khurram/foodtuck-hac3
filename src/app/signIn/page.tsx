@@ -4,11 +4,12 @@ import { TiLockClosedOutline } from "react-icons/ti";
 import Image from 'next/image';
 import { TopHeader } from '@/components/header/topHeader';
 import { PHeader } from '@/components/header/t2';
-
+import { Container } from '@/components/container'
 
 export default function SignIn() {
   return (
-    <main className='w-[1920px my-10'>
+    <Container>
+   
        {/* import header */}
                 <TopHeader />
                 <PHeader title='Sign in page'/>
@@ -88,6 +89,7 @@ export default function SignIn() {
         </div>
       </div>
     </div>
-    </main>
+    
+    </Container>
   )
 }
