@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import axios from "axios"
 
-
 interface CartItem {
   name: string
   image: string
@@ -16,6 +15,7 @@ interface CartItem {
 export default function CheckoutPage() {
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   const [total, setTotal] = useState(0)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -25,26 +25,46 @@ export default function CheckoutPage() {
     setTotal(cartTotal)
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Save form data to localStorage for use in payment and shipping pages
+    setIsSubmitting(true)
     const formData = new FormData(e.target as HTMLFormElement)
-    const checkoutData = Object.fromEntries(formData.entries())
-    localStorage.setItem('checkoutData', JSON.stringify(checkoutData))
-    // router.push('/payment')
+    const customerData = Object.fromEntries(formData.entries())
+
+    try {
+      const response = await axios.post('/api/submit-order', {
+        customerData,
+        cartItems,
+        total: totalAmount,
+      })
+
+      if (response.data.success) {
+        localStorage.setItem('checkoutData', JSON.stringify(customerData))
+        proceedToPayment()
+      } else {
+        console.error('Error submitting order:', response.data.error)
+        alert('There was an error submitting your order. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error submitting order:', error)
+      alert('There was an error submitting your order. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const proceedToPayment = () => {
-    axios.get('api/stripe-checkout').then((response)=>{
-      console.log(response.data?.message?.url); 
-
-      window.location.href = response.data?.message?.url;
-
-    }).catch(error => console.log(error));
+    axios.get('api/stripe-checkout').then((response) => {
+      console.log(response.data?.message?.url)
+      window.location.href = response.data?.message?.url
+    }).catch(error => {
+      console.log(error)
+      alert('There was an error processing your payment. Please try again.')
+    })
   }
- // shipping charges add
- const shippingCharges = 10;
- const totalAmount = total + shippingCharges
+
+  const shippingCharges = 10
+  const totalAmount = total + shippingCharges
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -76,39 +96,42 @@ export default function CheckoutPage() {
               <label htmlFor="postcode" className="block mb-2">Postcode</label>
               <input type="text" id="postcode" name="postcode" required className="w-full p-2 border rounded" />
             </div>
-
             <button 
-            onClick={proceedToPayment}
-             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-              Proceed to Payment
+              type="submit"
+              disabled={isSubmitting}
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:bg-blue-300"
+            >
+              {isSubmitting ? 'Submitting...' : 'Place Order and Proceed to Payment'}
             </button>
-
           </form>
         </div>
         <div className="w-full lg:w-1/2 px-4">
           <h2 className="text-2xl font-bold mb-4">Your Order</h2>
           <div className="border p-4 rounded">
-            {cartItems.map((item,index) => (
+            {cartItems.map((item, index) => (
               <div key={index} className="flex justify-between items-center mb-4">
                 <div className="flex items-center">
-                  <Image src={item.image} alt={item.name} width={50} height={50} className="mr-4" />
+                  <Image src={item.image || "/placeholder.svg"} alt={item.name} width={50} height={50} className="mr-4" />
                   <div>
                     <h3 className="font-bold">{item.name}</h3>
                     <p>Quantity: {item.quantity}</p>
-                    <p className='text-sm text-[#ff9F0D]'>Shipping Charges included </p>
                   </div>
                 </div>
                 <p>${(item.price * item.quantity).toFixed(2)}</p>
-                
               </div>
-              
             ))}
             <div className="border-t pt-4 mt-4">
-              <div className="flex justify-between items-center">
-                <h3 className="font-bold">Total</h3>
-                {/* <p className="font-bold">${total.toFixed(2)}</p> */}
-                <p className="font-bold">${(totalAmount).toFixed(2)}</p>
-              
+              <div className="flex justify-between items-center mb-2">
+                <h3>Subtotal</h3>
+                <p>${total.toFixed(2)}</p>
+              </div>
+              <div className="flex justify-between items-center mb-2">
+                <h3>Shipping</h3>
+                <p>${shippingCharges.toFixed(2)}</p>
+              </div>
+              <div className="flex justify-between items-center font-bold">
+                <h3>Total</h3>
+                <p>${totalAmount.toFixed(2)}</p>
               </div>
             </div>
           </div>
@@ -126,7 +149,15 @@ export default function CheckoutPage() {
 // import { useRouter } from 'next/navigation'
 // import Image from 'next/image'
 // import axios from "axios"
+// import sanityClient from '@sanity/client'
 
+// const client = sanityClient({
+//   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID, // replace with your Sanity project ID
+//   dataset:  process.env.NEXT_PUBLIC_SANITY_DATASET, // replace with your Sanity dataset name
+//   token: process.env.SANITY_ACESS_TOKEN, // replace with your Sanity token
+//   useCdn: true,
+// })
+// client.fetch('*[_type == "customer"]').then(customers => { console.log('Customers:', customers) }).catch(err => { console.error('Error fetching customers:', err) })
 
 // interface CartItem {
 //   name: string
@@ -153,17 +184,40 @@ export default function CheckoutPage() {
 //     const formData = new FormData(e.target as HTMLFormElement)
 //     const checkoutData = Object.fromEntries(formData.entries())
 //     localStorage.setItem('checkoutData', JSON.stringify(checkoutData))
-//     // router.push('/payment')
+
+//     // Save form data to Sanity
+//     const customerData = {
+//       _type: 'customer',
+//       name: checkoutData.name,
+//       email: checkoutData.email,
+//       address: checkoutData.address,
+//       city: checkoutData.city,
+//       country: checkoutData.country,
+//       postcode: checkoutData.postcode,
+//       cartItems: cartItems,
+//       totalAmount: total + 10 // include shipping charges
+//     }
+//     client.create(customerData)
+//       .then(res => {
+//         console.log('Customer data saved:', res)
+//       })
+//       .catch(err => {
+//         console.error('Error saving customer data:', err)
+//       })
+
+//     // Redirect to payment page
+//     proceedToPayment()
 //   }
 
 //   const proceedToPayment = () => {
-//     axios.get('api/stripe-checkout').then((response)=>{
-//       console.log(response.data?.message?.url); 
-
-//       window.location.href = response.data?.message?.url;
-
-//     }).catch(error => console.log(error));
+//     axios.get('/api/stripe-checkout').then((response) => {
+//       console.log(response.data?.message?.url)
+//       window.location.href = response.data?.message?.url
+//     }).catch(error => console.log(error))
 //   }
+
+//   const shippingCharges = 10
+//   const totalAmount = total + shippingCharges
 
 //   return (
 //     <div className="container mx-auto px-4 py-8">
@@ -196,24 +250,22 @@ export default function CheckoutPage() {
 //               <input type="text" id="postcode" name="postcode" required className="w-full p-2 border rounded" />
 //             </div>
 
-//             <button 
-//             onClick={proceedToPayment}
-//              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-//               Proceed to Payment
+//             <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+//               Order Place
 //             </button>
-
 //           </form>
 //         </div>
 //         <div className="w-full lg:w-1/2 px-4">
 //           <h2 className="text-2xl font-bold mb-4">Your Order</h2>
 //           <div className="border p-4 rounded">
-//             {cartItems.map((item,index) => (
+//             {cartItems.map((item, index) => (
 //               <div key={index} className="flex justify-between items-center mb-4">
 //                 <div className="flex items-center">
 //                   <Image src={item.image} alt={item.name} width={50} height={50} className="mr-4" />
 //                   <div>
 //                     <h3 className="font-bold">{item.name}</h3>
 //                     <p>Quantity: {item.quantity}</p>
+//                     <p className='text-sm text-[#ff9F0D]'>Shipping Charges included </p>
 //                   </div>
 //                 </div>
 //                 <p>${(item.price * item.quantity).toFixed(2)}</p>
@@ -222,7 +274,7 @@ export default function CheckoutPage() {
 //             <div className="border-t pt-4 mt-4">
 //               <div className="flex justify-between items-center">
 //                 <h3 className="font-bold">Total</h3>
-//                 <p className="font-bold">${total.toFixed(2)}</p>
+//                 <p className="font-bold">${totalAmount.toFixed(2)}</p>
 //               </div>
 //             </div>
 //           </div>
@@ -231,4 +283,3 @@ export default function CheckoutPage() {
 //     </div>
 //   )
 // }
-
