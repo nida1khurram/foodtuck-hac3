@@ -18,7 +18,7 @@ const navigation = [
   { name: "Pages", href: "/pages" },
   { name: "About", href: "/about" },
   { name: "Shop", href: "/shop" },
-  { name: "Contact", href: "/contact" },
+  { name: "Contact", href: "/contactUs" },
 ]
 
 export function TopHeader() {

@@ -13,6 +13,8 @@ import BlogPosts from "@/components/landingPage/BlogPosts";
 
 
 
+
+
 export default function Home() {
   return (
    <>
@@ -34,7 +36,7 @@ export default function Home() {
  {/* landing Page end*/}
 
 
-                                
+                             
       </div>
 
    </>
