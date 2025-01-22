@@ -11,10 +11,6 @@ import ResturantActive from "@/components/landingPage/resturantActive";
 import BlogPosts from "@/components/landingPage/BlogPosts";
 
 
-
-
-
-
 export default function Home() {
   return (
    <>
