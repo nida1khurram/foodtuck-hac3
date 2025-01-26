@@ -183,7 +183,7 @@ const ProductList: React.FC = () => {
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
-
+//pagination
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -239,7 +239,7 @@ const ProductList: React.FC = () => {
           onPageChange={handlePageChange}
         />
       </div>
-
+{/* pagination */}
 
     </div>
   );
