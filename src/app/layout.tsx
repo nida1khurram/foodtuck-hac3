@@ -1,5 +1,4 @@
-
-
+import SessionWrapper from "@/components/SessionWrapper";
 import type { Metadata } from "next";
 import { inter, poppins, pacifico, yuji_mai, great_vibes } from "../components/fonts";
 import "./globals.css";
@@ -21,6 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+    <SessionWrapper>
       <body className={(inter.variable, poppins.variable, pacifico.variable, yuji_mai.variable, great_vibes.variable)}>
         {/* <Header /> */}
         <ReduxProvider>
@@ -29,6 +29,7 @@ export default function RootLayout({
 
         <Footer />
       </body>
+      </SessionWrapper>
     </html>
   );
 }

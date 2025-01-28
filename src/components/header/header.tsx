@@ -33,7 +33,8 @@ export default function Header() {
             className="bg-transparent border-2 border-[#ff9F0D] text-white rounded-full py-2 px-4 pr-10 w-60 md:w-64 focus:outline-none"
           />
           <Search className="absolute right-2 md:right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-          <Link href="/cart"><MdOutlineShoppingBag className="absolute right-[-10px] md:right-[-20px] top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <Link href="/cart">
+          <MdOutlineShoppingBag className="absolute right-[-10px] md:right-[-20px] top-1/2 transform -translate-y-1/2 text-gray-400" />
           </Link>
         </div>
       </div>

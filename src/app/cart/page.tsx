@@ -1,6 +1,9 @@
 
 "use client"
-
+// sign in
+import { useSession, signIn } from "next-auth/react"; // Import NextAuth hooks
+import { Modal } from "@/components/ui/modal"; // Example for a modal component
+// sign in
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
@@ -27,6 +30,10 @@ interface WishlistItem {
 }
 
 export default function CartPage() {
+  // sign in
+  const { data: session } = useSession(); // Check user session
+  const [isSignInModalOpen, setIsSignInModalOpen] = useState(false); // Control modal visibility
+  // sign in
   const [cartItems, setCartItems] = useState<CartItem[]>([])
   // wishlist
   const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([])
@@ -85,7 +92,17 @@ export default function CartPage() {
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
   const shippingCharges = 10
   const totalAmount = total + shippingCharges
-
+// sign in
+const handleProceedToCheckout = () => {
+  if (!session) {
+    // Show sign-in modal if user is not signed in
+    setIsSignInModalOpen(true);
+  } else {
+    // Redirect to checkout if signed in
+    window.location.href = "/checkout";
+  }
+};
+// sign in
   return (
     <Container>
       <TopHeader />
@@ -187,10 +204,28 @@ export default function CartPage() {
               <span>${totalAmount.toFixed(2)}</span>
             </div>
           </div>
-          <button className="w-full mt-4 px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors flex items-center justify-center gap-2">
-            <Link href="/checkout">Proceed to Checkout</Link>
+          <button 
+           onClick={handleProceedToCheckout}
+          className="w-full mt-4 px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors flex items-center justify-center gap-2">
+            <Link href="">Proceed to Checkout</Link>
           </button>
         </div>
+        {/* sign in */}
+        {/* Sign-In Modal */}
+      <Modal isOpen={isSignInModalOpen} onClose={() => setIsSignInModalOpen(false)}>
+        <div className="p-6">
+          <h2 className="text-lg font-semibold mb-4">Sign In Required</h2>
+          <p className="mb-4">You must sign in to proceed to checkout.</p>
+          <button
+            onClick={() => signIn()}
+            className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+          >
+            Sign In
+          </button>
+        </div>
+      </Modal>
+{/* sign in */}
+
       </div>
 
      
