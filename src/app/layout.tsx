@@ -20,6 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      {/* sign in */}
     <SessionWrapper>
       <body className={(inter.variable, poppins.variable, pacifico.variable, yuji_mai.variable, great_vibes.variable)}>
         {/* <Header /> */}
@@ -29,6 +30,7 @@ export default function RootLayout({
 
         <Footer />
       </body>
+        {/* sign in */}
       </SessionWrapper>
     </html>
   );

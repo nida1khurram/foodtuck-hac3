@@ -74,3 +74,9 @@ const Wishlist: React.FC<WishlistProps> = ({ items, onRemove, onMoveToCart, show
 
 export default Wishlist
 
+
+
+// Componentswishlist.tsx
+// Productlistwishlist
+// Cartpagewishlist
+
