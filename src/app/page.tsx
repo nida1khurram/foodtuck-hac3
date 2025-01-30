@@ -32,7 +32,7 @@ export default function Home() {
  {/* landing Page end*/}
 
  
-{/* done */}
+
 
                              
       </div>
