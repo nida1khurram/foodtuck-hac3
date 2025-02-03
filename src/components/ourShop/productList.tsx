@@ -1,5 +1,4 @@
 
-
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,7 +10,6 @@ import { FaHeart } from "react-icons/fa";
 import Wishlist from "../../components/Wishlist";
 import { PaginationProduct } from "@/components/pagination";
 
-// Fetch products using the Sanity client
 const fetchProducts = async (): Promise<IProduct[]> => {
   const query = `*[_type == "food"]{
      name,
@@ -39,7 +37,8 @@ interface IProduct {
   available: boolean;
   slug: string;
 }
-// wishlist
+
+// Wishlist interface
 interface WishlistItem {
   _id: string;
   name: string;
@@ -52,10 +51,11 @@ const ProductList: React.FC = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [wishlist, setWishlist] = useState<WishlistItem[]>([]);
+  const [sortBy, setSortBy] = useState("popularity"); // Sorting state
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4; // Number of items per page
+  const itemsPerPage = 4; 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,7 +71,6 @@ const ProductList: React.FC = () => {
 
     fetchData();
 
-    // Load wishlist from localStorage start
     const storedWishlist = localStorage.getItem("wishlist");
     if (storedWishlist) {
       setWishlist(JSON.parse(storedWishlist));
@@ -105,10 +104,24 @@ const ProductList: React.FC = () => {
     localStorage.setItem("wishlist", JSON.stringify(newWishlist));
   };
 
+  // Sorting function
+  const sortedProducts = [...products].sort((a, b) => {
+    switch (sortBy) {
+      case "price-low-high":
+        return a.price - b.price;
+      case "price-high-low":
+        return b.price - a.price;
+      case "newest":
+        return new Date(b.description).getTime() - new Date(a.description).getTime();
+      default:
+        return 0;
+    }
+  });
+
   // Pagination calculations
-  const totalPages = Math.ceil(products.length / itemsPerPage);
+  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedProducts = products.slice(startIndex, startIndex + itemsPerPage);
+  const paginatedProducts = sortedProducts.slice(startIndex, startIndex + itemsPerPage);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -120,6 +133,22 @@ const ProductList: React.FC = () => {
 
   return (
     <div>
+      {/* Sorting Dropdown */}
+      <div className="flex justify-end mb-4">
+        <label className="text-lg mr-2">Sort By:</label>
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+          className="border rounded px-3 py-1"
+        >
+          <option value="popularity">Popularity</option>
+          <option value="price-low-high">Price: Low to High</option>
+          <option value="price-high-low">Price: High to Low</option>
+          <option value="newest">Newest Arrivals</option>
+        </select>
+      </div>
+
+      {/* Product List */}
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {paginatedProducts.map((product) => (
           <div key={product.slug} className="max-w-[312px] rounded-lg shadow-md overflow-hidden relative">
@@ -145,7 +174,7 @@ const ProductList: React.FC = () => {
                 )}
               </div>
             </div>
-            {/* wishlist start */}
+            {/* Wishlist Button */}
             <button
               onClick={() => toggleWishlist(product)}
               className="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md"
@@ -157,20 +186,21 @@ const ProductList: React.FC = () => {
                 className={`${wishlist.some((item) => item.slug === product.slug) ? "text-red-500" : "text-gray-400"}`}
               />
             </button>
-            {/* wishlist end */}
           </div>
         ))}
       </div>
 
+      {/* Wishlist Section */}
       <div className="mt-16">
         <h2 className="text-2xl font-bold mb-4">Your Wishlist</h2>
         <Wishlist
           items={wishlist}
           onRemove={removeFromWishlist}
-          onMoveToCart={() => {}} // Implement this function if needed
+          onMoveToCart={() => {}}
           showActions={false}
         />
       </div>
+
       {/* Pagination */}
       <div className="mt-8 flex justify-center">
         <PaginationProduct
@@ -179,10 +209,10 @@ const ProductList: React.FC = () => {
           onPageChange={handlePageChange}
         />
       </div>
-      {/* Pagination */}
     </div>
   );
 };
 
 export default ProductList;
+
 
