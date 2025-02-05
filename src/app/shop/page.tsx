@@ -32,21 +32,7 @@ export default function Shop() {
           <div className="w-full md:w-3/4">
             <div className="flex flex-col sm:flex-row justify-between items-center mb-8">
               <div className="flex flex-col md:flex-row items-center gap-4">
-                {/* sort by */}
-                <div className="relative flex gap-4">
-                  <p className="md:text-xl text-black items-center">Sort By :</p>
-                  <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                    className="appearance-none bg-white text-gray-400 border rounded-lg px-4 py-2 md:pr-8 focus:outline-none focus:ring-2 focus:ring-gray-400"
-                  > 
-                    <option value="popularity">Newest</option>
-                    <option value="price-low-high">Price: Low to High</option>
-                    <option value="price-high-low">Price: High to Low</option>
-                    <option value="newest">Newest Arrivals</option>
-                  </select>
-                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 pointer-events-none" />
-                </div>
+               
                 {/* show */}
                 <div className="relative flex gap-4">
                   <p className="md:text-xl text-black items-center">Show :</p>
