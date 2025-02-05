@@ -1,3 +1,7 @@
+// // save sanity
+// // src action
+// // types/product.ts
+// // array::unique(*[_type != "system"]._type)
 'use client';
 import { useState, useEffect } from "react";
 import Image from "next/image";
