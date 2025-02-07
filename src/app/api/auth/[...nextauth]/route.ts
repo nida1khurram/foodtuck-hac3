@@ -1,43 +1,23 @@
-// import NextAuth from "next-auth";
-// import GitHubProvider from "next-auth/providers/github";
-
-// export const authOptions = {
-//   providers: [
-//     GitHubProvider({
-//       clientId: process.env.GITHUB_ID!,
-//       clientSecret: process.env.GITHUB_SECRET!,
-//       authorization: {
-//         params: { redirect_uri: `${process.env.NEXTAUTH_URL}/api/auth/callback/github` },
-//       },
-//     }),
-//   ],
-//   callbacks: {
-//     async redirect({ url, baseUrl }:any) {
-//       return baseUrl; // Ensures it works in both localhost & production
-//     },
-//   },
-// };
-
-// export default NextAuth(authOptions);
 
 
 
-import NextAuth from "next-auth"
-import GithubProvider from "next-auth/providers/github"
+import NextAuth from "next-auth/next"
+// import GithubProvider from "next-auth/providers/github"
+import GoogleProvider from 'next-auth/providers/google'
 
 const handler = NextAuth({
   providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!,
+    GoogleProvider({
+      // clientId: process.env.GITHUB_ID!,
+      // clientSecret: process.env.GITHUB_SECRET!,
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
   debug: process.env.NODE_ENV === "development",
 })
 
 export { handler as GET, handler as POST }
-
-
 
 
 // Sign in

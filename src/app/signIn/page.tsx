@@ -107,44 +107,25 @@
 
 
 
-
-
-
 "use client"
-import { useSession, signIn, signOut } from "next-auth/react"
-import { useEffect } from "react"
+import { useSession, signIn, signOut} from 'next-auth/react'
+import React from 'react'
 
-export default function Component() {
-  const { data: session, status } = useSession()
-
-  useEffect(() => {
-    // Redirect to sign-in page if not authenticated
-    if (status === "unauthenticated") {
-      window.location.href = "/signin"
-    } else if (status === "authenticated") {
-      alert("You are signed in")
-      window.location.href = "/checkout"
-    }
-  }, [status])
-
-  if (status === "authenticated" && session?.user) {
-    return (
-      <>
-        Signed in as {session.user.email ?? "User"} <br />
-        {session.user.name ?? "User Name"} <br />
-        <img src={session.user.image ?? "default-image.jpg"} alt="User" />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
+export default function Page() {
+  const {data:session} = useSession();
+  if(session && session.user){
+    return(
+<div>
+ <p> {session.user.name}</p>
+ <button onClick={()=> signOut()}>Sign Out</button>
+</div>
     )
   }
   return (
     <>
-      Not signed in <br />
-      <button onClick={() => signIn("github")}>Sign in with Github</button>
+    <button onClick={() => signIn()}>Sign In</button>
     </>
   )
 }
-
-
 
 
