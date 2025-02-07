@@ -1,49 +1,44 @@
-// import NextAuth from "next-auth";
-// import GitHubProvider from "next-auth/providers/github";
 
+// import NextAuth from "next-auth"
+// import GoogleProvider from "next-auth/providers/google"
 // export const authOptions = {
 //   providers: [
-//     GitHubProvider({
-//       clientId: process.env.GITHUB_ID!,
-//       clientSecret: process.env.GITHUB_SECRET!,
-//       authorization: {
-//         params: { redirect_uri: `${process.env.NEXTAUTH_URL}/api/auth/callback/github` },
-//       },
+//     GoogleProvider({
+//       clientId: process.env.GOOGLE_CLIENT_ID!,
+//       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
 //     }),
 //   ],
-//   callbacks: {
-//     async redirect({ url, baseUrl }:any) {
-//       return baseUrl; // Ensures it works in both localhost & production
-//     },
-//   },
-// };
+//   debug: process.env.NODE_ENV === "development",
+// }
+// const handler = NextAuth(authOptions)
+// export { handler as GET, handler as POST }
 
-// export default NextAuth(authOptions);
+import NextAuth, { NextAuthOptions } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
 
-
-
-import NextAuth from "next-auth"
-import GithubProvider from "next-auth/providers/github"
-
-const handler = NextAuth({
+// Define the authOptions with the correct type
+const authOptions: NextAuthOptions = {
   providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID!,
-      clientSecret: process.env.GITHUB_SECRET!,
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
   debug: process.env.NODE_ENV === "development",
-})
+};
 
-export { handler as GET, handler as POST }
+// Create the handler using NextAuth
+const handler = NextAuth(authOptions);
 
+// Export the handler for GET and POST requests
+export { handler as GET, handler as POST };
 
 
 
 // Sign in
-// appauth
-// Appcart page
-// Sign in page
-// Componentsuimodal.tsx
-// Components SessionWrapper
-// Layout SessionWrapper
+// app/auth
+// App/cart page
+// Sign in/page
+// Components/ui/modal.tsx
+// Components/ SessionWrapper
+// Layout/ SessionWrapper
