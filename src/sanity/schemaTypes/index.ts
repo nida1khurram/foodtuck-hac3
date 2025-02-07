@@ -5,6 +5,8 @@ import chefs from './chefs'
 import customer from './customer'
 import order from './order'
 
+import order from './order'
+
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [foods,chefs,customer,order],
