@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // "use client"
 // import { useSession, signIn, signOut } from "next-auth/react"
 // import { useEffect } from "react"
@@ -107,40 +108,54 @@
 
 
 
-
-
-
 "use client"
-import { useSession, signIn, signOut } from "next-auth/react"
-import { useEffect } from "react"
+import { useSession, signIn, signOut} from 'next-auth/react'
+import React from 'react'
 
-export default function Component() {
-  const { data: session, status } = useSession()
-
-  useEffect(() => {
-    // Redirect to sign-in page if not authenticated
-    if (status === "unauthenticated") {
-      window.location.href = "/signin"
-    } else if (status === "authenticated") {
-      alert("You are signed in")
-      window.location.href = "/checkout"
-    }
-  }, [status])
-
-  if (status === "authenticated" && session?.user) {
-    return (
-      <>
-        Signed in as {session.user.email ?? "User"} <br />
-        {session.user.name ?? "User Name"} <br />
-        <img src={session.user.image ?? "default-image.jpg"} alt="User" />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
+export default function Page() {
+  const {data:session} = useSession();
+  if(session && session.user){
+    return(
+<div>
+ <p> {session.user.name}</p>
+ <button onClick={()=> signOut()}>Sign Out</button>
+</div>
     )
+=======
+"use client"
+
+import { signIn } from "next-auth/react"
+import { useSearchParams } from "next/navigation"
+import { useState } from "react"
+import { Container } from "@/components/container"
+import { TopHeader } from "@/components/header/topHeader"
+import { PHeader } from "@/components/header/t2"
+import { Button } from "@/components/ui/button"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+
+export default function SignIn() {
+  const searchParams = useSearchParams()
+  const error = searchParams.get("error")
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleSignIn = async () => {
+    try {
+      setIsLoading(true)
+      await signIn("github", {
+        callbackUrl: "/checkout",
+      })
+    } catch (error) {
+      console.error("Sign in error:", error)
+    } finally {
+      setIsLoading(false)
+    }
+>>>>>>> a74457dfb43b7974c9725e4725ef4bc5e376ac8a
   }
+
   return (
     <>
       Not signed in <br />
-      <button onClick={() => signIn("google")}>Sign in with Google</button>
+      <button onClick={() => signIn("github")}>Sign in with Github</button>
     </>
   )
 }
@@ -148,3 +163,4 @@ export default function Component() {
 
 
 
+>>>>>>> a74457dfb43b7974c9725e4725ef4bc5e376ac8a

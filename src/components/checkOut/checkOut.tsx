@@ -1,12 +1,15 @@
-// // save sanity
-// // src action
-// // types/product.ts
-// // array::unique(*[_type != "system"]._type)
-'use client';
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import axios from "axios";
-import Ordersave from "@/actions/ordersave";
+
+
+
+
+"use client"
+import { useState, useEffect } from "react"
+import Image from "next/image"
+import axios from "axios"
+import { useRouter } from "next/navigation"
+import OrderPlacedPopup from "./OrderPlacedPopup"
+import PaymentMethodModal from "./PaymentMethodModal"
+import { saveSanityOrder } from "../../lib/sanity"
 
 interface CartItem {
   id: string;
@@ -60,6 +63,8 @@ export default function CheckoutPage() {
     }));
   }, [total, shippingCharges]);
 
+
+
   const proceedToPayment = async () => {
     try {
       const response = await axios.post("/api/stripe-checkout", {
@@ -76,13 +81,13 @@ export default function CheckoutPage() {
     }
   };
 
-  const handleSubmitOrder = () => {
-    console.log(customerInfo);
-    console.log(cartItems);
-    Ordersave(cartItems, customerInfo);
-    // setShowForm(false)
-    // setCartt([])
-  };
+  // const handleSubmitOrder = () => {
+  //   console.log(customerInfo);
+  //   console.log(cartItems);
+  //   Ordersave(cartItems, customerInfo);
+  //   // setShowForm(false)
+  //   // setCartt([])
+  // };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -160,13 +165,13 @@ export default function CheckoutPage() {
             >
               Proceed to Payment
             </button>
-            <button
+            {/* <button
               type="button"
               onClick={handleSubmitOrder}
               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
             >
               Submit order
-            </button>
+            </button> */}
           </form>
         </div>
         <div className="w-full lg:w-1/2 px-4">
@@ -201,7 +206,13 @@ export default function CheckoutPage() {
           </div>
         </div>
       </div>
+
+      {/* {showOrderPlacedPopup && <OrderPlacedPopup />}
+      {showPaymentModal && (
+        <PaymentMethodModal onClose={() => setShowPaymentModal(false)} onStripeClick={handleStripePayment} />
+      )} */}
     </div>
   );
 }
+
 
